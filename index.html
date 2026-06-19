@@ -16,7 +16,6 @@
             background-color: #0b0b0f; 
             color: white; 
             height: 100vh; 
-            height: -webkit-fill-available; 
             display: flex; 
             flex-direction: column; 
             overflow: hidden; 
@@ -29,8 +28,9 @@
             left: 0; 
             width: 100%; 
             height: 100%; 
-            z-index: 1; 
-            opacity: 0.2; 
+            z-index: 0; 
+            opacity: 0.15; 
+            pointer-events: none; /* Scroll blocked nahi karega */
         }
 
         /* Login Screen */
@@ -67,10 +67,10 @@
             outline: none; 
         }
 
-        /* Header Fixed */
+        /* Header */
         .chat-header { 
             height: 60px; 
-            background: rgba(22, 22, 31, 0.95); 
+            background: #16161f; 
             display: flex; 
             align-items: center; 
             justify-content: space-between; 
@@ -84,26 +84,27 @@
             color: #00ffcc;
         }
 
-        /* Messages Container - SCROLL SYSTEM FIXED HERE */
+        /* Messages Container - Scroll system fix */
         .messages-container { 
             flex: 1; 
             padding: 15px; 
             overflow-y: auto; 
             display: flex;
             flex-direction: column;
-            gap: 10px;
+            gap: 12px;
             z-index: 5; 
             -webkit-overflow-scrolling: touch; 
+            margin-bottom: 5px;
         }
 
-        /* Message Bubbles Style */
+        /* Message Bubbles */
         .msg { 
             max-width: 80%; 
             padding: 10px 14px; 
             border-radius: 16px; 
             font-size: 0.95rem; 
             word-wrap: break-word;
-            display: inline-block;
+            position: relative;
             box-shadow: 0 1px 3px rgba(0,0,0,0.2);
         }
         .sent { 
@@ -127,28 +128,29 @@
             color: #ff9900;
         }
 
+        /* Hidden Type Delete Button */
         .del-btn { 
-            background: #ff4444; 
-            color: white; 
+            background: rgba(255, 68, 68, 0.2); 
+            color: rgba(255, 255, 255, 0.6); 
             border: none; 
-            padding: 2px 6px; 
+            padding: 1px 5px; 
             border-radius: 4px; 
             cursor: pointer; 
-            font-size: 0.65rem; 
+            font-size: 0.6rem; 
             margin-left: 8px;
-            vertical-align: middle;
+            display: inline-block;
         }
 
-        /* Input Bar Fixed Bottom */
+        /* Input Bar Fixed Bottom Properly */
         .chat-input-bar { 
-            height: 70px; 
+            height: 65px; 
             background: #111b21; 
             display: flex; 
-            padding: 12px 15px; 
+            padding: 10px 15px; 
             gap: 10px; 
             align-items: center;
             z-index: 10; 
-            border-top: 1px solid rgba(255,255,255,0.05);
+            border-top: 1px solid #252538;
             flex-shrink: 0;
         }
         .chat-input-bar input { 
@@ -268,14 +270,13 @@
                     if(!data.sender || !data.text) return;
                     
                     const isMe = data.sender === currentUsername;
-                    
                     const msgDiv = document.createElement('div');
                     msgDiv.className = `msg ${isMe ? 'sent' : 'received'}`;
                     
                     msgDiv.innerHTML = `
                         <span class="sender-title">${isMe ? 'Aap' : data.sender}</span>
                         <span>${data.text}</span>
-                        <button class="del-btn" onclick="deleteMsg('${d.id}')">Delete</button>
+                        <button class="del-btn" onclick="deleteMsg('${d.id}')">×</button>
                     `;
                     
                     cont.appendChild(msgDiv);
@@ -319,5 +320,4 @@
         requestAnimationFrame(drawMatrix);
     </script>
 </body>
-  </html>
-              
+</html>

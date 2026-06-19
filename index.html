@@ -12,19 +12,23 @@
             font-family: sans-serif; 
         }
         
+        /* Full Screen No-Overlap Layout */
+        html, body {
+            height: 100%;
+            background-color: #0b0b0f;
+            overflow: hidden;
+        }
+
         body { 
-            background-color: #0b0b0f; 
             color: white; 
-            height: 100vh; 
-            height: -webkit-fill-available;
             display: flex; 
             flex-direction: column; 
-            overflow: hidden; 
             position: relative;
         }
 
+        /* Matrix Background Layer Behind Everything */
         #bg-canvas { 
-            position: fixed; 
+            position: absolute; 
             top: 0; 
             left: 0; 
             width: 100%; 
@@ -85,17 +89,16 @@
             color: #00ffcc;
         }
 
-        /* Messages Container - Height Fixed */
+        /* Messages Window - Pure Vertical Scrolling Fix */
         .messages-container { 
             flex: 1; 
             padding: 15px; 
-            overflow-y: auto; 
+            overflow-y: scroll; 
             display: flex;
             flex-direction: column;
             gap: 12px;
             z-index: 10; 
             -webkit-overflow-scrolling: touch; 
-            margin-bottom: 65px; /* Input bar ke liye niche thoda gap */
         }
 
         /* Message Bubbles */
@@ -129,6 +132,7 @@
             color: #ff9900;
         }
 
+        /* Small Delete Button */
         .del-btn { 
             background: rgba(255, 68, 68, 0.2); 
             color: rgba(255, 255, 255, 0.6); 
@@ -141,24 +145,21 @@
             display: inline-block;
         }
 
-        /* Safe Bottom Fixed Bar */
+        /* Safe & Visible Input Bar (No Position Absolute/Fixed) */
         .chat-input-bar { 
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            height: 60px; 
+            height: 65px; 
             background: #111b21; 
             display: flex; 
             padding: 10px 15px; 
             gap: 10px; 
             align-items: center;
-            z-index: 99; 
+            z-index: 10; 
             border-top: 1px solid #252538;
+            flex-shrink: 0; /* Isse keyboard aane par bhi ye gayab nahi hoga */
         }
         .chat-input-bar input { 
             flex: 1; 
-            padding: 10px 15px; 
+            padding: 12px 15px; 
             background: #2a3942; 
             border: none; 
             border-radius: 25px; 
@@ -169,11 +170,11 @@
         .send-btn { 
             background: #00a884; 
             border: none; 
-            width: 40px; 
-            height: 40px;
+            width: 45px; 
+            height: 45px;
             border-radius: 50%; 
             color: white; 
-            font-size: 1.1rem;
+            font-size: 1.2rem;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -199,10 +200,10 @@
         <span id="user-display" style="font-weight:bold; color:#00ffcc;"></span>
     </div>
 
-    <!-- Messages Window -->
+    <!-- Messages Container -->
     <div class="messages-container" id="messages-container"></div>
 
-    <!-- Input Box Fixed -->
+    <!-- Input Bar (Naturally placed at the bottom) -->
     <div class="chat-input-bar">
         <input type="text" id="msg-input" placeholder="Message type karein..." autocomplete="off">
         <button class="send-btn" onclick="sendMessage()">➔</button>
@@ -287,11 +288,11 @@
                 
                 setTimeout(() => {
                     cont.scrollTop = cont.scrollHeight;
-                }, 50);
+                }, 80);
             });
         }
 
-        // Matrix Background
+        // Matrix Effect
         const canvas = document.getElementById('bg-canvas');
         const ctx = canvas.getContext('2d');
         let columns = 0, drops = [];
@@ -323,4 +324,5 @@
         requestAnimationFrame(drawMatrix);
     </script>
 </body>
-</html>
+            </html>
+    

@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>KAUSAR CHAT HUB</title>
+    <style>
+        * { 
+            margin: 0; 
+            padding: 0; 
+            box-sizing: border-box; 
+            font-family: sans-serif; 
+        }
+        
+        body { 
+            background-color: #0b0b0f; 
+            color: white; 
+            height: 100vh; 
+            height: -webkit-fill-available; 
+            display: flex; 
+            flex-direction: column; 
+            overflow: hidden; 
+            position: relative;
+        }
+
+        #bg-canvas { 
+            position: fixed; 
+            top: 0; 
+            left: 0; 
+            width: 100%; 
+            height: 100%; 
+            z-index: 1; 
+            opacity: 0.2; 
+        }
+
+        /* Login Screen */
+        .login-screen { 
+            position: fixed; 
+            top: 0; 
+            left: 0; 
+            width: 100vw; 
+            height: 100vh; 
+            background: #0b0b0f; 
+            display: flex; 
+            flex-direction: column; 
+            align-items: center; 
+            justify-content: center; 
+            z-index: 999; 
+        }
+        .login-box { 
+            background: #16161f; 
+            border: 2px solid #00ffcc; 
+            padding: 30px; 
+            border-radius: 20px; 
+            text-align: center; 
+            width: 85%; 
+            max-width: 340px;
+        }
+        .input-field { 
+            width: 100%; 
+            padding: 12px; 
+            background: rgba(255,255,255,0.05); 
+            border: 1px solid #252538; 
+            border-radius: 12px; 
+            color: white; 
+            margin-bottom: 20px; 
+            outline: none; 
+        }
+
+        /* Header Fixed */
+        .chat-header { 
+            height: 60px; 
+            background: rgba(22, 22, 31, 0.95); 
+            display: flex; 
+            align-items: center; 
+            justify-content: space-between; 
+            padding: 0 15px; 
+            border-bottom: 1px solid #252538; 
+            z-index: 10; 
+            flex-shrink: 0;
+        }
+        .chat-header h1 {
+            font-size: 1.3rem;
+            color: #00ffcc;
+        }
+
+        /* Messages Container - SCROLL SYSTEM FIXED HERE */
+        .messages-container { 
+            flex: 1; 
+            padding: 15px; 
+            overflow-y: auto; 
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            z-index: 5; 
+            -webkit-overflow-scrolling: touch; 
+        }
+
+        /* Message Bubbles Style */
+        .msg { 
+            max-width: 80%; 
+            padding: 10px 14px; 
+            border-radius: 16px; 
+            font-size: 0.95rem; 
+            word-wrap: break-word;
+            display: inline-block;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+        }
+        .sent { 
+            background: #005c4b; 
+            align-self: flex-end; 
+            border-bottom-right-radius: 2px;
+        }
+        .received { 
+            background: #202c33; 
+            align-self: flex-start; 
+            border-bottom-left-radius: 2px;
+        }
+        .sender-title {
+            font-size: 0.75rem;
+            color: #00ffcc;
+            font-weight: bold;
+            display: block;
+            margin-bottom: 3px;
+        }
+        .received .sender-title {
+            color: #ff9900;
+        }
+
+        .del-btn { 
+            background: #ff4444; 
+            color: white; 
+            border: none; 
+            padding: 2px 6px; 
+            border-radius: 4px; 
+            cursor: pointer; 
+            font-size: 0.65rem; 
+            margin-left: 8px;
+            vertical-align: middle;
+        }
+
+        /* Input Bar Fixed Bottom */
+        .chat-input-bar { 
+            height: 70px; 
+            background: #111b21; 
+            display: flex; 
+            padding: 12px 15px; 
+            gap: 10px; 
+            align-items: center;
+            z-index: 10; 
+            border-top: 1px solid rgba(255,255,255,0.05);
+            flex-shrink: 0;
+        }
+        .chat-input-bar input { 
+            flex: 1; 
+            padding: 12px 15px; 
+            background: #2a3942; 
+            border: none; 
+            border-radius: 25px; 
+            color: white; 
+            outline: none; 
+            font-size: 1rem;
+        }
+        .send-btn { 
+            background: #00a884; 
+            border: none; 
+            width: 45px; 
+            height: 45px;
+            border-radius: 50%; 
+            color: white; 
+            font-size: 1.2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <canvas id="bg-canvas"></canvas>
+    
+    <!-- Login Screen -->
+    <div id="login-screen" class="login-screen">
+        <div class="login-box">
+            <h2 style="color:#00ffcc; margin-bottom:15px;">KAUSAR CHAT</h2>
+            <input type="text" id="username-input" class="input-field" placeholder="Apna Naam Likhein..." autocomplete="off">
+            <button onclick="joinChat()" style="padding: 12px 30px; background:#00a884; border:none; color:white; border-radius: 10px; font-weight:bold; cursor:pointer;">Join Chat</button>
+        </div>
+    </div>
+
+    <!-- Header -->
+    <div class="chat-header">
+        <h1>KAUSAR CHAT HUB</h1>
+        <span id="user-display" style="font-weight:bold; color:#00ffcc;"></span>
+    </div>
+
+    <!-- Messages Window -->
+    <div class="messages-container" id="messages-container"></div>
+
+    <!-- Input Box -->
+    <div class="chat-input-bar">
+        <input type="text" id="msg-input" placeholder="Message type karein..." autocomplete="off">
+        <button class="send-btn" onclick="sendMessage()">➔</button>
+    </div>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+        import { getFirestore, collection, addDoc, query, orderBy, onSnapshot, serverTimestamp, deleteDoc, doc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+
+        const firebaseConfig = { 
+            apiKey: "AnzaSyAHazZpA2srlEclDKE0qWrDuj", 
+            authDomain: "kausar-chat-hub.firebaseapp.com", 
+            projectId: "kausar-chat-hub", 
+            storageBucket: "kausar-chat-hub.appspot.com", 
+            messagingSenderId: "543766591580", 
+            appId: "1:543766591580:web:fbbcdd538d3c" 
+        };
+        
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+        const colRef = collection(db, "messages");
+
+        let currentUsername = "";
+
+        window.joinChat = () => {
+            const nameInput = document.getElementById('username-input').value.trim();
+            if(!nameInput) return alert("Bhai naam likho pahle! 😄");
+            currentUsername = nameInput;
+            document.getElementById('user-display').innerText = `👤 ${currentUsername}`;
+            document.getElementById('login-screen').style.display = 'none';
+            listenMessages();
+        };
+
+        window.sendMessage = async () => {
+            const input = document.getElementById('msg-input');
+            const text = input.value.trim();
+            if(text) {
+                await addDoc(colRef, { 
+                    text: text, 
+                    sender: currentUsername, 
+                    timestamp: serverTimestamp() 
+                });
+                input.value = "";
+                input.focus();
+            }
+        };
+
+        document.getElementById('msg-input').addEventListener('keypress', (e) => { if(e.key === 'Enter') sendMessage(); });
+        document.getElementById('username-input').addEventListener('keypress', (e) => { if(e.key === 'Enter') joinChat(); });
+
+        window.deleteMsg = async (id) => {
+            const pass = prompt("Admin Password daalo:");
+            if (pass === "12345") {
+                await deleteDoc(doc(db, "messages", id));
+            } else {
+                alert("Galat Password Bhai!");
+            }
+        };
+
+        function listenMessages() {
+            const q = query(colRef, orderBy("timestamp", "asc"));
+            onSnapshot(q, (snapshot) => {
+                const cont = document.getElementById('messages-container');
+                cont.innerHTML = "";
+                
+                snapshot.forEach((d) => {
+                    const data = d.data();
+                    if(!data.sender || !data.text) return;
+                    
+                    const isMe = data.sender === currentUsername;
+                    
+                    const msgDiv = document.createElement('div');
+                    msgDiv.className = `msg ${isMe ? 'sent' : 'received'}`;
+                    
+                    msgDiv.innerHTML = `
+                        <span class="sender-title">${isMe ? 'Aap' : data.sender}</span>
+                        <span>${data.text}</span>
+                        <button class="del-btn" onclick="deleteMsg('${d.id}')">Delete</button>
+                    `;
+                    
+                    cont.appendChild(msgDiv);
+                });
+                
+                setTimeout(() => {
+                    cont.scrollTop = cont.scrollHeight;
+                }, 50);
+            });
+        }
+
+        // Matrix Background
+        const canvas = document.getElementById('bg-canvas');
+        const ctx = canvas.getContext('2d');
+        let columns = 0, drops = [];
+        const fontSize = 14;
+
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+            columns = Math.floor(canvas.width / fontSize) + 1;
+            drops = [];
+            for (let x = 0; x < columns; x++) drops[x] = Math.random() * -50;
+        }
+        window.addEventListener('resize', resizeCanvas);
+        resizeCanvas();
+
+        function drawMatrix() {
+            ctx.fillStyle = 'rgba(11, 11, 15, 0.1)';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            ctx.fillStyle = 'rgba(0, 255, 204, 0.12)';
+            ctx.font = fontSize + 'px monospace';
+            for (let i = 0; i < drops.length; i++) {
+                const text = Math.random() > 0.5 ? "0" : "1";
+                ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+                if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) drops[i] = 0;
+                drops[i] += 1;
+            }
+            requestAnimationFrame(drawMatrix);
+        }
+        requestAnimationFrame(drawMatrix);
+    </script>
+</body>
+  </html>
+              

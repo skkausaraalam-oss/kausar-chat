@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KAUSAR GAME HUB</title>
+    <style>
+        /* === SYSTEM INITIALIZATION === */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #0f0f12;
+            color: #ffffff;
+            overflow-x: hidden;
+        }
+
+        /* Animated Grid Background (Highly Optimized for 4GB RAM) */
+        .bg-grid {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background-image: linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px),
+                              linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px);
+            background-size: 30px 30px;
+            background-position: center;
+        }
+
+        /* === HEADER SECTION === */
+        header {
+            text-align: center;
+            padding: 40px 20px 20px 20px;
+            background: linear-gradient(to bottom, rgba(0,0,0,0.8), transparent);
+        }
+
+        .main-title {
+            font-size: 2.8rem;
+            font-weight: 900;
+            color: #00ffcc;
+            text-shadow: 0 0 15px rgba(0, 255, 204, 0.4);
+            letter-spacing: 2px;
+            margin-bottom: 5px;
+        }
+
+        .subtitle {
+            font-size: 1.1rem;
+            color: #8a8a98;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        .line-separator {
+            width: 80px;
+            height: 4px;
+            background: #00ffcc;
+            margin: 15px auto 0 auto;
+            border-radius: 2px;
+            box-shadow: 0 0 10px #00ffcc;
+        }
+
+        /* === MAIN CONTENT / GAMES GRID === */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 30px 20px;
+        }
+
+        .games-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+            justify-content: center;
+        }
+
+        /* Game Card Styling */
+        .game-card {
+            background: #16161f;
+            border: 1px solid #252538;
+            border-radius: 18px;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+            transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        /* Mobile Hover/Active state animation */
+        .game-card:active, .game-card:hover {
+            transform: translateY(-5px);
+            border-color: #00ffcc;
+            box-shadow: 0 12px 25px rgba(0, 255, 204, 0.15);
+        }
+
+        .game-info {
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
+        }
+
+        .game-icon {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+
+        .game-name {
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: #ffffff;
+            margin-bottom: 8px;
+        }
+
+        .game-desc {
+            font-size: 0.9rem;
+            color: #a0a0b0;
+            line-height: 1.4;
+            margin-bottom: 20px;
+            flex-grow: 1;
+        }
+
+        .play-btn {
+            display: block;
+            text-align: center;
+            background: #00ffcc;
+            color: #0f0f12;
+            text-decoration: none;
+            padding: 12px;
+            border-radius: 12px;
+            font-weight: 700;
+            font-size: 1rem;
+            letter-spacing: 0.5px;
+            transition: background 0.2s;
+        }
+
+        .play-btn:active {
+            background: #00ccaa;
+        }
+
+        /* === FOOTER === */
+        footer {
+            text-align: center;
+            padding: 40px 20px;
+            color: #626274;
+            font-size: 0.9rem;
+            border-top: 1px solid #16161f;
+            margin-top: 50px;
+        }
+
+        footer span {
+            color: #00ffcc;
+            font-weight: 600;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="bg-grid"></div>
+
+    <!-- HEADER SECTION -->
+    <header>
+        <h1 class="main-title">KAUSAR GAME HUB</h1>
+        <p class="subtitle">Premium HTML5 Mobile Games Collection</p>
+        <div class="line-separator"></div>
+    </header>
+
+    <!-- GAMES COLLECTION SECTION -->
+    <div class="container">
+        <div class="games-grid">
+
+            <!-- GAME 1: BALL SORT -->
+            <div class="game-card">
+                <div class="game-info">
+                    <div class="game-icon">🧪</div>
+                    <div class="game-name">Ball Sort</div>
+                    <div class="game-desc">Alag-alag tubes me same color ki bolls ko sort karein. Ek majedar dimagi kasrat wala puzzle game!</div>
+                    <!--https://kausar-bollsort.netlify.app/  -->
+                    <a href=" https://boll-game.netlify.app/" class="play-btn" target="_blank">PLAY NOW</a>
+                </div>
+            </div>
+
+            <!-- GAME 2: APNA GAME 2 DATA -->
+            <div class="game-card">
+                <div class="game-info">
+                    <div class="game-icon">🐍</div>
+                    <div class="game-name">tic tok toy </div>
+                    <div class="game-desc">is game me tic tok toy game ge jisme multiplayar game khal sakte he is me bot bhi he jo 3 mod me he .</div>
+                    <!-- Apne doosre game ka link href inside daalein -->
+                    <a href="https://aalam-game.netlify.app/ " class="play-btn" target="_blank">PLAY NOW</a>
+                </div>
+            </div>
+
+            <!-- GAME 3: APNA GAME 3 DATA -->
+            <div class="game-card">
+                <div class="game-info">
+                    <div class="game-icon">🎮</div>
+                    <div class="game-name">number puzzal game  </div>
+                    <div class="game-desc">iss game me number puzzal game he iss me 3 type ka puzzle he  </div>
+                    <a href="https://kausar-alaam.netlify.app/ " class="play-btn" target="_blank">PLAY NOW</a>
+                </div>
+            </div>
+
+            <!-- GAME 4: APNA GAME 4 DATA -->
+            <div class="game-card">
+                <div class="game-info">
+                    <div class="game-icon">🎯</div>
+                    <div class="game-name">space shooter </div>
+                    <div class="game-desc">Aap ko is game me ek spaceshipe milega or aage se enemy aarahe honge tum enemy ko kill karna tumhara score badega is me hp pkg or extra fire pkg aaye ga .</div>
+                    <a href="https://kausar-bhai.netlify.app/" class="play-btn" target="_blank">PLAY NOW</a>
+                </div>
+            </div>
+
+            <!-- GAME 5: APNA GAME 5 DATA -->
+            <div class="game-card">
+                <div class="game-info">
+                    <div class="game-icon">⚡</div>
+                    <div class="game-name">jungal game </div>
+                    <div class="game-desc">iss me ek jungal me ek box hoga tumhe screen me tap kara na he or khal na he </div>
+                    <a href="https://jod-prime.netlify.app/ " class="play-btn" target="_blank">PLAY NOW</a>
+                </div>
+            </div>
+
+            <!-- GAME 6: APNA GAME 6 DATA -->
+            <div class="game-card">
+                <div class="game-info">
+                    <div class="game-icon">🎲</div>
+                    <div class="game-name">Game Name 6</div>
+                    <div class="game-desc">Apne chatthe game ki information yahan fill karein aur niche link lagayein.</div>
+                    <a href="YAHAN_APNA_LINK_DALEIN" class="play-btn" target="_blank">PLAY NOW</a>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- FOOTER SECTION -->
+    <footer>
+        <p>&copy; 2026 Designed & Developed by <span>KAUSAR AALAM</span>. All Rights Reserved.</p>
+    </footer>
+
+</body>
+  </html>
+  
